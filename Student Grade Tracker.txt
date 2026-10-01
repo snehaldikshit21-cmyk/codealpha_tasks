@@ -1,0 +1,142 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Student {
+    String name;
+    ArrayList<Integer> grades;
+
+    Student(String name) {
+        this.name = name;
+        this.grades = new ArrayList<>();
+    }
+
+    void addGrade(int grade) {
+        grades.add(grade);
+    }
+
+    double calculateAverage() {
+        int total = 0;
+
+        for (int grade : grades) {
+            total += grade;
+        }
+
+        return (double) total / grades.size();
+    }
+
+    int getHighest() {
+        int highest = grades.get(0);
+
+        for (int grade : grades) {
+            if (grade > highest) {
+                highest = grade;
+            }
+        }
+
+        return highest;
+    }
+
+    int getLowest() {
+        int lowest = grades.get(0);
+
+        for (int grade : grades) {
+            if (grade < lowest) {
+                lowest = grade;
+            }
+        }
+
+        return lowest;
+    }
+
+    void displayReport() {
+        System.out.println("\nStudent Name: " + name);
+        System.out.println("Grades: " + grades);
+        System.out.println("Average: " + String.format("%.2f", calculateAverage()));
+        System.out.println("Highest Score: " + getHighest());
+        System.out.println("Lowest Score: " + getLowest());
+    }
+}
+
+public class StudentGradeTracker {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Student> students = new ArrayList<>();
+
+        System.out.println("===== STUDENT GRADE TRACKER =====");
+
+        System.out.print("Enter number of students: ");
+        int numberOfStudents = sc.nextInt();
+        sc.nextLine();
+
+        for (int i = 0; i < numberOfStudents; i++) {
+
+            System.out.print("\nEnter student name: ");
+            String name = sc.nextLine();
+
+            Student student = new Student(name);
+
+            System.out.print("Enter number of grades: ");
+            int numberOfGrades = sc.nextInt();
+
+            for (int j = 0; j < numberOfGrades; j++) {
+                System.out.print("Enter grade " + (j + 1) + ": ");
+                int grade = sc.nextInt();
+
+                if (grade >= 0 && grade <= 100) {
+                    student.addGrade(grade);
+                } else {
+                    System.out.println("Invalid grade! Enter a value between 0 and 100.");
+                    j--;
+                }
+            }
+
+            sc.nextLine();
+            students.add(student);
+        }
+
+        // Display summary report
+        System.out.println("\n\n===== STUDENT SUMMARY REPORT =====");
+
+        for (Student student : students) {
+            student.displayReport();
+        }
+
+        sc.close();
+    }
+}
+
+
+EXAMPLE OUTPUT:
+
+===== STUDENT GRADE TRACKER =====
+
+Enter number of students: 2
+
+Enter student name: Rahul
+Enter number of grades: 3
+Enter grade 1: 80
+Enter grade 2: 75
+Enter grade 3: 90
+
+Enter student name: Priya
+Enter number of grades: 3
+Enter grade 1: 85
+Enter grade 2: 92
+Enter grade 3: 78
+
+
+===== STUDENT SUMMARY REPORT =====
+
+Student Name: Rahul
+Grades: [80, 75, 90]
+Average: 81.67
+Highest Score: 90
+Lowest Score: 75
+
+Student Name: Priya
+Grades: [85, 92, 78]
+Average: 85.00
+Highest Score: 92
+Lowest Score: 78
